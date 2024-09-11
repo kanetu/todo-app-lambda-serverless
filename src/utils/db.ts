@@ -1,0 +1,25 @@
+import { Client } from "pg";
+import { getSecret } from "./secret-management";
+
+const createDbInstance = async (dbSecretName: string) => {
+  const secret = await getSecret(dbSecretName);
+  if (!secret.SecretString) {
+    throw Error("There is no secret string");
+  }
+
+  const parsedSecret = JSON.parse(secret.SecretString);
+
+  return new Client({
+    host: parsedSecret.db_host,
+    user: parsedSecret.db_user,
+    password: parsedSecret.db_password,
+    database: parsedSecret.db_database,
+    port: parsedSecret.db_port,
+  });
+};
+const connectDatabase = (client: Client) => client.connect();
+const queryDatabase = (client: Client, query: string) => client.query(query);
+const commandDatabase = (client: Client, command: string) =>
+  client.query(command);
+
+export { createDbInstance, connectDatabase, queryDatabase, commandDatabase };

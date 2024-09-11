@@ -1,0 +1,27 @@
+{
+  "name": "todo-serverless",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A minimal example of Node 18 + TypeScript 5.1 + Serverless Framework + AWS",
+  "scripts": {
+    "dev": "serverless offline -s dev",
+    "test": "glob -c \"node --loader tsx --test\" \"./src/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.645.0",
+    "@types/node": "^22.5.3",
+    "@types/pg": "^8.11.8",
+    "joi": "^17.13.3",
+    "pg": "^8.12.0",
+    "serverless-offline": "^14.3.1"
+  },
+  "devDependencies": {
+    "@serverless/typescript": "^3.38.0",
+    "@types/aws-lambda": "^8.10.145",
+    "esbuild": "^0.20.2",
+    "serverless": "^4.2.4",
+    "serverless-esbuild": "^1.52.1",
+    "serverless-localstack": "^1.2.1",
+    "typescript": "^5.5.4"
+  }
+}

@@ -1,0 +1,63 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: kanetu731
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: todo-serverless
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: todo-serverless
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+build: 
+  esbuild: false
+
+
+plugins:
+  - serverless-esbuild # used for compiling/packaging the Typescript code
+  - serverless-offline # used for local execution
+  - serverless-localstack
+
+
+# LocalStack configuration
+custom:
+  localstack:
+    stages:
+      - dev  # Specify which stages use LocalStack
+    host: http://localhost  # Default LocalStack URL
+    edgePort: 4566  # Default port for LocalStack edge service (4566 in recent versions)
+    autostart: true  # Automatically starts LocalStack in Docker
+    endpoints:
+      SecretsManager: http://localhost:4566  # Example: Override specific service endpoint
+
+
+functions:
+  getTodos:
+    handler: ./src/todo/getTodos.getTodos
+    events:
+      - httpApi:
+          path: /todo
+          method: get
+  getTodo:
+    handler: ./src/todo/getTodo.getTodo
+    events:
+      - httpApi:
+          path: /todo/{id}
+          method: get
+  createTodo:
+    handler: ./src/todo/createTodo.createTodo
+    events:
+      - httpApi:
+          path: /todo
+          method: post
+  updateTodo:
+    handler: ./src/todo/updateTodo.updateTodo
+    events:
+      - httpApi:
+          path: /todo/{id}
+          method: patch
+  deleteTodo:
+    handler: ./src/todo/deleteTodo.deleteTodo
+    events:
+      - httpApi:
+          path: /todo/{id}
+          method: delete
