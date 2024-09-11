@@ -42,7 +42,7 @@ export const createTodo: Handler = async (
     console.log("error: ", err);
   } finally {
     await db.end();
-    console.log("end::createTodo");
+    console.log("end::createTodo---");
   }
 
   return {
