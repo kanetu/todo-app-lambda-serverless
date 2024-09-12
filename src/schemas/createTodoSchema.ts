@@ -1,4 +1,4 @@
-import Joi from "joi";
+import * as Joi from "joi";
 import common from "./common";
 
 const createTodoSchema = Joi.object({

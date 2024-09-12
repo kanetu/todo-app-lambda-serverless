@@ -16,14 +16,22 @@ export const createTodo: Handler = async (
 ): Promise<APIGatewayProxyStructuredResultV2> => {
   console.log("start::createTodo");
 
+  if (!_event.body){
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: "Bad Request",
+      }),
+    };
+  }
   const db = await createDbInstance(secretName);
 
   let result;
 
   try {
 
-    const validateResult = createTodoSchema.validate(JSON.parse(_event.body || ""))
-
+    const validateResult = createTodoSchema.validate(JSON.parse(_event.body))
+    console.log("akne->", validateResult)
     if(validateResult.error){
       return {
         statusCode: 400,
@@ -40,6 +48,12 @@ export const createTodo: Handler = async (
     result = await db.query(query.insertTodo, [name, status, due_date, priority]);
   } catch (err) {
     console.log("error: ", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Internal Server Error",
+      })
+    };
   } finally {
     await db.end();
     console.log("end::createTodo--");

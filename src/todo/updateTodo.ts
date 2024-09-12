@@ -13,7 +13,7 @@ export const updateTodo: Handler = async (
   _event: APIGatewayProxyEventV2,
   _context: Context
 ): Promise<APIGatewayProxyStructuredResultV2> => {
-  if (!_event.pathParameters) {
+  if (!_event.pathParameters || !_event.body) {
     return {
       statusCode: 400,
       body: JSON.stringify({
@@ -30,7 +30,7 @@ export const updateTodo: Handler = async (
   try {
     const { id } = _event.pathParameters;
     const validateResult = updateTodoSchema.validate(
-      JSON.parse(_event.body || "")
+      JSON.parse(_event.body)
     );
 
     if (validateResult.error) {
@@ -51,6 +51,12 @@ export const updateTodo: Handler = async (
     result = await db.query(query.updateTodo, [name, status, priority, id]);
   } catch (err) {
     console.error("error: ", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Internal Server Error",
+      })
+    };
   } finally {
     await db.end();
     console.info("end::updateTodo");

@@ -25,6 +25,12 @@ export const getTodos: Handler = async (
     result = await db.query(query.getAllTodo);
   } catch (err) {
     console.log("error: ", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Internal Server Error",
+      })
+    };
   } finally {
     await db.end();
     console.log("end::getTodos");
