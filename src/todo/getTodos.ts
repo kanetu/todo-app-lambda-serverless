@@ -7,7 +7,7 @@ import type {
 import { createDbInstance } from "../utils/db";
 import { query } from "../utils/query";
 
-export const secretName = "db-secret";
+export const secretName = "todo-serverless-firebase-server-account";
 
 
 export const getTodos: Handler = async (

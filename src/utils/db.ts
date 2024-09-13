@@ -8,7 +8,7 @@ const createDbInstance = async (dbSecretName: string) => {
   }
 
   const parsedSecret = JSON.parse(secret.SecretString);
-
+  console.log("parsedSecret->>>", parsedSecret)
   return new Client({
     host: parsedSecret.db_host,
     user: parsedSecret.db_user,

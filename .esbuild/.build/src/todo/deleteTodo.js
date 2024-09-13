@@ -23685,6 +23685,7 @@ var getSecret = async (secretName2) => {
       })
     );
   } catch (error) {
+    console.error(error);
     throw error;
   }
   return response;
@@ -23697,6 +23698,7 @@ var createDbInstance = async (dbSecretName) => {
     throw Error("There is no secret string");
   }
   const parsedSecret = JSON.parse(secret.SecretString);
+  console.log("parsedSecret->>>", parsedSecret);
   return new import_pg.Client({
     host: parsedSecret.db_host,
     user: parsedSecret.db_user,
@@ -23716,7 +23718,7 @@ var query = {
 };
 
 // src/todo/getTodos.ts
-var secretName = "db-secret";
+var secretName = "todo-serverless-firebase-server-account";
 
 // src/todo/deleteTodo.ts
 var deleteTodo = async (_event, _context) => {
