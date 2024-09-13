@@ -1,5 +1,5 @@
 import { Client } from "pg";
-import { getSecret } from "./secret-management";
+import { getSecret } from "./getSecret";
 
 const createDbInstance = async (dbSecretName: string) => {
   const secret = await getSecret(dbSecretName);

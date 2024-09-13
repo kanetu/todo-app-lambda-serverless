@@ -23671,7 +23671,7 @@ module.exports = __toCommonJS(deleteTodo_exports);
 // src/utils/db.ts
 var import_pg = __toESM(require_lib2());
 
-// src/utils/secret-management.ts
+// src/utils/getSecret.ts
 var import_client_secrets_manager = __toESM(require_dist_cjs53());
 var getSecret = async (secretName2) => {
   const client = new import_client_secrets_manager.SecretsManagerClient({
@@ -23739,6 +23739,12 @@ var deleteTodo = async (_event, _context) => {
     result = await db.query(query.deleteTodo, [id]);
   } catch (err) {
     console.error("error: ", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Internal Server Error"
+      })
+    };
   } finally {
     await db.end();
     console.info("end::deleteTodo");

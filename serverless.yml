@@ -31,6 +31,12 @@ custom:
 
 
 functions:
+  pushNotification:
+      handler: ./src/todo/pushNotification.pushNotification
+      events:
+        - httpApi:
+            path: /pushNotification/{token}
+            method: get
   getTodos:
     handler: ./src/todo/getTodos.getTodos
     events:

@@ -4,7 +4,6 @@ import {
 } from "@aws-sdk/client-secrets-manager";
 
 const getSecret = async (secretName: string) => {
-  console.log("=====>", SecretsManagerClient)
   const client = new SecretsManagerClient({
     region: "us-east-1",
   });

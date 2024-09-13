@@ -409,8 +409,8 @@ var require_textParsers = __commonJS({
         return null;
       return array.parse(value, parseBool);
     }
-    function parseBaseTenInt(string) {
-      return parseInt(string, 10);
+    function parseBaseTenInt(string3) {
+      return parseInt(string3, 10);
     }
     function parseIntegerArray(value) {
       if (!value)
@@ -1207,8 +1207,8 @@ var require_utils_legacy = __commonJS({
   "node_modules/pg/lib/crypto/utils-legacy.js"(exports2, module2) {
     "use strict";
     var nodeCrypto = require("crypto");
-    function md52(string) {
-      return nodeCrypto.createHash("md5").update(string, "utf-8").digest("hex");
+    function md52(string3) {
+      return nodeCrypto.createHash("md5").update(string3, "utf-8").digest("hex");
     }
     function postgresMd5PasswordHash(user, password, salt) {
       var inner = md52(password + user);
@@ -1253,11 +1253,11 @@ var require_utils_webcrypto = __commonJS({
     function randomBytes(length) {
       return webCrypto.getRandomValues(Buffer.alloc(length));
     }
-    async function md52(string) {
+    async function md52(string3) {
       try {
-        return nodeCrypto.createHash("md5").update(string, "utf-8").digest("hex");
+        return nodeCrypto.createHash("md5").update(string3, "utf-8").digest("hex");
       } catch (e) {
-        const data = typeof string === "string" ? textEncoder.encode(string) : string;
+        const data = typeof string3 === "string" ? textEncoder.encode(string3) : string3;
         const hash = await subtleCrypto.digest("MD5", data);
         return Array.from(new Uint8Array(hash)).map((b) => b.toString(16).padStart(2, "0")).join("");
       }
@@ -2188,22 +2188,22 @@ var require_buffer_writer = __commonJS({
         this.buffer[this.offset++] = num >>> 0 & 255;
         return this;
       }
-      addCString(string) {
-        if (!string) {
+      addCString(string3) {
+        if (!string3) {
           this.ensure(1);
         } else {
-          var len = Buffer.byteLength(string);
+          var len = Buffer.byteLength(string3);
           this.ensure(len + 1);
-          this.buffer.write(string, this.offset, "utf-8");
+          this.buffer.write(string3, this.offset, "utf-8");
           this.offset += len;
         }
         this.buffer[this.offset++] = 0;
         return this;
       }
-      addString(string = "") {
-        var len = Buffer.byteLength(string);
+      addString(string3 = "") {
+        var len = Buffer.byteLength(string3);
         this.ensure(len);
-        this.buffer.write(string, this.offset);
+        this.buffer.write(string3, this.offset);
         this.offset += len;
         return this;
       }
@@ -2374,13 +2374,13 @@ var require_serializer = __commonJS({
       buffer.writeInt32BE(secretKey, 12);
       return buffer;
     };
-    var cstringMessage = (code, string) => {
-      const stringLen = Buffer.byteLength(string);
+    var cstringMessage = (code, string3) => {
+      const stringLen = Buffer.byteLength(string3);
       const len = 4 + stringLen + 1;
       const buffer = Buffer.allocUnsafe(1 + len);
       buffer[0] = code;
       buffer.writeInt32BE(len, 1);
-      buffer.write(string, 5, "utf-8");
+      buffer.write(string3, 5, "utf-8");
       buffer[len] = 0;
       return buffer;
     };
@@ -11231,13 +11231,13 @@ var require_dist_cjs32 = __commonJS({
       toJSON() {
         return super.toString();
       }
-      static fromObject(object) {
-        if (object instanceof _LazyJsonString2) {
-          return object;
-        } else if (object instanceof String || typeof object === "string") {
-          return new _LazyJsonString2(object);
+      static fromObject(object3) {
+        if (object3 instanceof _LazyJsonString2) {
+          return object3;
+        } else if (object3 instanceof String || typeof object3 === "string") {
+          return new _LazyJsonString2(object3);
         }
-        return new _LazyJsonString2(JSON.stringify(object));
+        return new _LazyJsonString2(JSON.stringify(object3));
       }
     };
     __name(_LazyJsonString, "LazyJsonString");
@@ -13219,7 +13219,7 @@ var init_parseJsonBody = __esm({
       return value;
     };
     loadRestJsonErrorCode = (output, data) => {
-      const findKey = (object, key) => Object.keys(object).find((k) => k.toLowerCase() === key.toLowerCase());
+      const findKey = (object3, key) => Object.keys(object3).find((k) => k.toLowerCase() === key.toLowerCase());
       const sanitizeErrorCode = (rawValue) => {
         let cleanValue = rawValue;
         if (typeof cleanValue === "number") {
@@ -13258,9 +13258,9 @@ var require_util = __commonJS({
     var nameChar = nameStartChar + "\\-.\\d\\u00B7\\u0300-\\u036F\\u203F-\\u2040";
     var nameRegexp = "[" + nameStartChar + "][" + nameChar + "]*";
     var regexName = new RegExp("^" + nameRegexp + "$");
-    var getAllMatches = function(string, regex) {
+    var getAllMatches = function(string3, regex) {
       const matches = [];
-      let match = regex.exec(string);
+      let match = regex.exec(string3);
       while (match) {
         const allmatches = [];
         allmatches.startIndex = regex.lastIndex - match[0].length;
@@ -13269,12 +13269,12 @@ var require_util = __commonJS({
           allmatches.push(match[index]);
         }
         matches.push(allmatches);
-        match = regex.exec(string);
+        match = regex.exec(string3);
       }
       return matches;
     };
-    var isName = function(string) {
-      const match = regexName.exec(string);
+    var isName = function(string3) {
+      const match = regexName.exec(string3);
       return !(match === null || typeof match === "undefined");
     };
     exports2.isExist = function(v) {
@@ -14870,10 +14870,10 @@ var require_json2xml = __commonJS({
       } else
         return " " + attrName + '="' + val2 + '"';
     };
-    function processTextOrObjNode(object, key, level) {
-      const result = this.j2x(object, level + 1);
-      if (object[this.options.textNodeName] !== void 0 && Object.keys(object).length === 1) {
-        return this.buildTextValNode(object[this.options.textNodeName], key, result.attrStr, level);
+    function processTextOrObjNode(object3, key, level) {
+      const result = this.j2x(object3, level + 1);
+      if (object3[this.options.textNodeName] !== void 0 && Object.keys(object3).length === 1) {
+        return this.buildTextValNode(object3[this.options.textNodeName], key, result.attrStr, level);
       } else {
         return this.buildObjectNode(result.val, key, result.attrStr, level);
       }
@@ -24332,7 +24332,7 @@ var require_lib3 = __commonJS({
       settings: Symbol("settings")
     };
     exports2.Parser = class {
-      constructor(string, options = {}) {
+      constructor(string3, options = {}) {
         if (!options[internals.settings] && options.constants) {
           for (const constant in options.constants) {
             const value = options.constants[constant];
@@ -24344,9 +24344,9 @@ var require_lib3 = __commonJS({
         this.settings = options[internals.settings] ? options : Object.assign({ [internals.settings]: true, constants: {}, functions: {} }, options);
         this.single = null;
         this._parts = null;
-        this._parse(string);
+        this._parse(string3);
       }
-      _parse(string) {
+      _parse(string3) {
         let parts = [];
         let current = "";
         let parenthesis = 0;
@@ -24393,7 +24393,7 @@ var require_lib3 = __commonJS({
           }
           current = "";
         };
-        for (const c of string) {
+        for (const c of string3) {
           if (literal) {
             if (c === literal) {
               flush();
@@ -24476,25 +24476,25 @@ var require_lib3 = __commonJS({
           return internals.reference(part.value);
         });
       }
-      _subFormula(string, name) {
+      _subFormula(string3, name) {
         const method = this.settings.functions[name];
         if (typeof method !== "function") {
           throw new Error(`Formula contains unknown function ${name}`);
         }
         let args = [];
-        if (string) {
+        if (string3) {
           let current = "";
           let parenthesis = 0;
           let literal = false;
           const flush = () => {
             if (!current) {
-              throw new Error(`Formula contains function ${name} with invalid arguments ${string}`);
+              throw new Error(`Formula contains function ${name} with invalid arguments ${string3}`);
             }
             args.push(current);
             current = "";
           };
-          for (let i = 0; i < string.length; ++i) {
-            const c = string[i];
+          for (let i = 0; i < string3.length; ++i) {
+            const c = string3[i];
             if (literal) {
               current += c;
               if (c === literal) {
@@ -25393,9 +25393,9 @@ var require_template = __commonJS({
               options
               /*] */
             );
-            const string = internals.stringify(rendered, value, state, prefs, local, options);
-            if (string !== void 0) {
-              const result = part.raw || (options.errors && options.errors.escapeHtml) === false ? string : EscapeHtml(string);
+            const string3 = internals.stringify(rendered, value, state, prefs, local, options);
+            if (string3 !== void 0) {
+              const result = part.raw || (options.errors && options.errors.escapeHtml) === false ? string3 : EscapeHtml(string3);
               parts.push(internals.wrap(result, part.wrapped && prefs.errors.wrap.label));
             }
           }
@@ -25434,24 +25434,24 @@ var require_template = __commonJS({
     };
     internals.Template.prototype[Common.symbols.template] = true;
     internals.Template.prototype.isImmutable = true;
-    internals.encode = function(string) {
-      return string.replace(/\\(\{+)/g, ($0, $1) => {
+    internals.encode = function(string3) {
+      return string3.replace(/\\(\{+)/g, ($0, $1) => {
         return internals.opens.slice(0, $1.length);
       }).replace(/\\(\}+)/g, ($0, $1) => {
         return internals.closes.slice(0, $1.length);
       });
     };
-    internals.decode = function(string) {
-      return string.replace(/\u0000/g, "{").replace(/\u0001/g, "}");
+    internals.decode = function(string3) {
+      return string3.replace(/\u0000/g, "{").replace(/\u0001/g, "}");
     };
-    internals.split = function(string) {
+    internals.split = function(string3) {
       const parts = [];
       let current = "";
-      for (let i = 0; i < string.length; ++i) {
-        const char = string[i];
+      for (let i = 0; i < string3.length; ++i) {
+        const char = string3[i];
         if (char === "{") {
           let next = "";
-          while (i + 1 < string.length && string[i + 1] === "{") {
+          while (i + 1 < string3.length && string3[i + 1] === "{") {
             next += "{";
             ++i;
           }
@@ -26638,10 +26638,10 @@ var require_manifest = __commonJS({
         return normalized;
       }
     };
-    internals.regex = function(string) {
-      const end = string.lastIndexOf("/");
-      const exp = string.slice(1, end);
-      const flags = string.slice(end + 1);
+    internals.regex = function(string3) {
+      const end = string3.lastIndexOf("/");
+      const exp = string3.slice(1, end);
+      const flags = string3.slice(end + 1);
       return new RegExp(exp, flags);
     };
     internals.validate = function(joi, desc) {
@@ -31359,11 +31359,11 @@ var require_number = __commonJS({
                 return result;
               }
             } else {
-              const string = result.value.toString();
-              if (string.match(/e/i)) {
+              const string3 = result.value.toString();
+              if (string3.match(/e/i)) {
                 return result;
               }
-              if (string !== internals.normalizeDecimal(value)) {
+              if (string3 !== internals.normalizeDecimal(value)) {
                 result.errors = error("number.unsafe");
                 return result;
               }
@@ -31856,8 +31856,8 @@ var require_assert2 = __commonJS({
 var require_escapeRegex = __commonJS({
   "node_modules/@sideway/address/node_modules/@hapi/hoek/lib/escapeRegex.js"(exports2, module2) {
     "use strict";
-    module2.exports = function(string) {
-      return string.replace(/[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g, "\\$&");
+    module2.exports = function(string3) {
+      return string3.replace(/[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g, "\\$&");
     };
   }
 });
@@ -32022,8 +32022,8 @@ var require_ip = __commonJS({
 var require_escapeRegex2 = __commonJS({
   "node_modules/joi/node_modules/@hapi/hoek/lib/escapeRegex.js"(exports2, module2) {
     "use strict";
-    module2.exports = function(string) {
-      return string.replace(/[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g, "\\$&");
+    module2.exports = function(string3) {
+      return string3.replace(/[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g, "\\$&");
     };
   }
 });
@@ -34466,7 +34466,7 @@ module.exports = __toCommonJS(updateTodo_exports);
 // src/utils/db.ts
 var import_pg = __toESM(require_lib2());
 
-// src/utils/secret-management.ts
+// src/utils/getSecret.ts
 var import_client_secrets_manager = __toESM(require_dist_cjs53());
 var getSecret = async (secretName2) => {
   const client = new import_client_secrets_manager.SecretsManagerClient({
@@ -34514,26 +34514,26 @@ var query = {
 var secretName = "db-secret";
 
 // src/schemas/common.ts
-var import_joi = __toESM(require_lib6());
+var Joi = __toESM(require_lib6());
 var common = {
-  name: import_joi.default.string().min(3).max(50),
-  status: import_joi.default.string().valid("pending", "in-process", "on-hold", "done"),
-  priority: import_joi.default.string().valid("low", "normal", "high", "urgent")
+  name: Joi.string().min(3).max(50),
+  status: Joi.string().valid("pending", "in-process", "on-hold", "done"),
+  priority: Joi.string().valid("low", "normal", "high", "urgent")
 };
 var common_default = common;
 
 // src/schemas/createTodoSchema.ts
-var import_joi2 = __toESM(require_lib6());
-var createTodoSchema = import_joi2.default.object({
+var Joi2 = __toESM(require_lib6());
+var createTodoSchema = Joi2.object({
   name: common_default.name.required(),
-  due_date: import_joi2.default.string().required(),
+  due_date: Joi2.string().required(),
   status: common_default.status.required(),
   priority: common_default.priority.required()
 });
 
 // src/schemas/updateTodoSchema.ts
-var import_joi3 = __toESM(require_lib6());
-var updateTodoSchema = import_joi3.default.object({
+var Joi3 = __toESM(require_lib6());
+var updateTodoSchema = Joi3.object({
   name: common_default.name.required(),
   status: common_default.status.required(),
   priority: common_default.priority.required()
@@ -34542,7 +34542,7 @@ var updateTodoSchema_default = updateTodoSchema;
 
 // src/todo/updateTodo.ts
 var updateTodo = async (_event, _context) => {
-  if (!_event.pathParameters) {
+  if (!_event.pathParameters || !_event.body) {
     return {
       statusCode: 400,
       body: JSON.stringify({
@@ -34556,7 +34556,7 @@ var updateTodo = async (_event, _context) => {
   try {
     const { id } = _event.pathParameters;
     const validateResult = updateTodoSchema_default.validate(
-      JSON.parse(_event.body || "")
+      JSON.parse(_event.body)
     );
     if (validateResult.error) {
       return {
@@ -34573,6 +34573,12 @@ var updateTodo = async (_event, _context) => {
     result = await db.query(query.updateTodo, [name, status, priority, id]);
   } catch (err) {
     console.error("error: ", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Internal Server Error"
+      })
+    };
   } finally {
     await db.end();
     console.info("end::updateTodo");
