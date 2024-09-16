@@ -1,0 +1,8 @@
+{
+  "type": "REQUEST",
+  "methodArn": "arn:aws:execute-api:us-east-1:123456789012:api-id/dev/GET/resource",
+  "authorizationToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoia2FuZSIsImlhdCI6MTcyNjQ4Mjk1NX0.meqLOf-krJpJPgYtwdFuhG_N-VoPFPkWzhwJaZh0I_I",
+  "headers": {
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoia2FuZSIsImlhdCI6MTcyNjQ4Mjk1NX0.meqLOf-krJpJPgYtwdFuhG_N-VoPFPkWzhwJaZh0I_I"
+  }
+}

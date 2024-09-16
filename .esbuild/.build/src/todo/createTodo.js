@@ -34468,15 +34468,17 @@ var import_pg = __toESM(require_lib2());
 
 // src/utils/getSecret.ts
 var import_client_secrets_manager = __toESM(require_dist_cjs53());
-var getSecret = async (secretName2) => {
+var isOffline = process.env.IS_OFFLINE;
+var getSecret = async (secretName) => {
   const client = new import_client_secrets_manager.SecretsManagerClient({
-    region: "us-east-1"
+    region: "us-east-1",
+    ...isOffline ? { endpoint: "http://localhost:4566" } : {}
   });
   let response;
   try {
     response = await client.send(
       new import_client_secrets_manager.GetSecretValueCommand({
-        SecretId: secretName2
+        SecretId: secretName
       })
     );
   } catch (error) {
@@ -34493,7 +34495,6 @@ var createDbInstance = async (dbSecretName) => {
     throw Error("There is no secret string");
   }
   const parsedSecret = JSON.parse(secret.SecretString);
-  console.log("parsedSecret->>>", parsedSecret);
   return new import_pg.Client({
     host: parsedSecret.db_host,
     user: parsedSecret.db_user,
@@ -34511,9 +34512,6 @@ var query = {
   deleteTodo: "DELETE FROM todo WHERE id = $1",
   updateTodo: "UPDATE todo SET name = $1, status = $2, priority = $3 WHERE id = $4 RETURNING *"
 };
-
-// src/todo/getTodos.ts
-var secretName = "todo-serverless-firebase-server-account";
 
 // src/schemas/common.ts
 var Joi = __toESM(require_lib6());
@@ -34542,6 +34540,9 @@ var updateTodoSchema = Joi3.object({
   priority: common_default.priority.required()
 });
 
+// src/const/index.ts
+var dbSecret = "db-secret";
+
 // src/todo/createTodo.ts
 var createTodo = async (_event, _context) => {
   console.log("start::createTodo");
@@ -34553,7 +34554,7 @@ var createTodo = async (_event, _context) => {
       })
     };
   }
-  const db = await createDbInstance(secretName);
+  const db = await createDbInstance(dbSecret);
   let result;
   try {
     const validateResult = createTodoSchema_default.validate(JSON.parse(_event.body));

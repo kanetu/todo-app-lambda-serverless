@@ -5,7 +5,7 @@ import type {
   Handler,
 } from "aws-lambda";
 import { createDbInstance } from "../utils/db";
-import { secretName } from "./getTodos";
+import { dbSecret } from "../const";
 import { query } from "../utils/query";
 
 export const getTodo: Handler = async (
@@ -27,7 +27,7 @@ export const getTodo: Handler = async (
 
   console.info("get::todo:id", id);
 
-  const db = await createDbInstance(secretName);
+  const db = await createDbInstance(dbSecret);
 
   let result;
 

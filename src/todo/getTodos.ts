@@ -6,9 +6,7 @@ import type {
 } from "aws-lambda";
 import { createDbInstance } from "../utils/db";
 import { query } from "../utils/query";
-
-export const secretName = "todo-serverless-firebase-server-account";
-
+import { dbSecret } from "../const";
 
 export const getTodos: Handler = async (
   _event: APIGatewayProxyEventV2,
@@ -16,7 +14,7 @@ export const getTodos: Handler = async (
 ): Promise<APIGatewayProxyStructuredResultV2> => {
   console.log("start::getTodos");
 
-  const db = await createDbInstance(secretName);
+  const db = await createDbInstance(dbSecret);
 
   let result;
 
@@ -39,7 +37,6 @@ export const getTodos: Handler = async (
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: "::getTodos",
       data: result?.rows,
     }),
   };

@@ -8,27 +8,13 @@ service: todo-serverless
 provider:
   name: aws
   runtime: nodejs20.x
+
 build: 
   esbuild: false
-
 
 plugins:
   - serverless-esbuild # used for compiling/packaging the Typescript code
   - serverless-offline # used for local execution
-  - serverless-localstack
-
-
-# LocalStack configuration
-custom:
-  localstack:
-    stages:
-      - dev  # Specify which stages use LocalStack
-    host: http://localhost  # Default LocalStack URL
-    edgePort: 4566  # Default port for LocalStack edge service (4566 in recent versions)
-    autostart: true  # Automatically starts LocalStack in Docker
-    endpoints:
-      SecretsManager: http://localhost:4566  # Example: Override specific service endpoint
-
 
 functions:
   pushNotification:
@@ -37,6 +23,12 @@ functions:
         - httpApi:
             path: /pushNotification/{token}
             method: get
+      environment:
+        JWT_SECRET: "nothingsecret"
+  authorizer:
+      handler: ./src/auth/authorizer.authorizer
+      environment:
+        JWT_SECRET: "nothingsecret"
   getTodos:
     handler: ./src/todo/getTodos.getTodos
     events:

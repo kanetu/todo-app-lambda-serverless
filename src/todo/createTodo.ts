@@ -5,10 +5,9 @@ import type {
   Handler,
 } from "aws-lambda";
 import { createDbInstance } from "../utils/db";
-import { secretName } from "./getTodos";
 import { query } from "../utils/query";
 import { createTodoSchema } from "../schemas";
-
+import { dbSecret } from "../const";
 
 export const createTodo: Handler = async (
   _event: APIGatewayProxyEventV2,
@@ -24,7 +23,7 @@ export const createTodo: Handler = async (
       }),
     };
   }
-  const db = await createDbInstance(secretName);
+  const db = await createDbInstance(dbSecret);
 
   let result;
 

@@ -5,9 +5,9 @@ import type {
   Handler,
 } from "aws-lambda";
 import { createDbInstance } from "../utils/db";
-import { secretName } from "./getTodos";
 import { query } from "../utils/query";
 import { updateTodoSchema } from "../schemas";
+import { dbSecret } from "../const";
 
 export const updateTodo: Handler = async (
   _event: APIGatewayProxyEventV2,
@@ -25,7 +25,7 @@ export const updateTodo: Handler = async (
   console.info("start::updateTodo");
 
   let result;
-  const db = await createDbInstance(secretName);
+  const db = await createDbInstance(dbSecret);
 
   try {
     const { id } = _event.pathParameters;
