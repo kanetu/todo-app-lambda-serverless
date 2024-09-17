@@ -2,11 +2,12 @@
   "name": "todo-serverless",
   "private": true,
   "version": "1.0.0",
+  "type": "module",
   "description": "A minimal example of Node 18 + TypeScript 5.1 + Serverless Framework + AWS",
   "scripts": {
     "dev": "serverless offline -s dev",
     "test-jest": "jest --config jest.config.js --coverage",
-    "test-jest:single": "jest --findRelatedTests ",
+    "test-jest:single": "jest --coverage --findRelatedTests ",
     "test-authorizer": "serverless invoke local --function authorizer --path ./src/events/authorizerEvent.json",
     "test": "glob -c \"node --loader tsx --test\" \"./src/**/*.test.ts\""
   },

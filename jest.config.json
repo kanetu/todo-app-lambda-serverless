@@ -1,0 +1,17 @@
+{
+  "testEnvironment": "node",
+  "testMatch": ["<rootDir>/**/*.test.(js|jsx|ts|tsx)"],
+  "moduleFileExtensions": ["ts", "js"],
+  "transform": {
+    "^.+.tsx?$": ["ts-jest",{}]
+  },
+  "transformIgnorePatterns": ["<rootDir>/node_modules/"],
+  "clearMocks": true,
+
+  "verbose": true,
+  "collectCoverageFrom": [
+    "**/*.{ts,tsx}",
+    "!**/node_modules/**",
+    "!**/vendor/**"
+  ]
+}

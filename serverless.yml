@@ -23,8 +23,6 @@ functions:
         - httpApi:
             path: /pushNotification/{token}
             method: get
-      environment:
-        JWT_SECRET: "nothingsecret"
   authorizer:
       handler: ./src/auth/authorizer.authorizer
       environment:
