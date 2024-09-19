@@ -10,4 +10,4 @@
       "resolveJsonModule": true
     },
     "include": ["src/**/*.ts"],
-  }
+}
