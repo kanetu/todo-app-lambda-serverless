@@ -1,4 +1,4 @@
-import firebaseAdmin from "firebase-admin"
+import * as firebaseAdmin from "firebase-admin"
 import serviceAccount from '../../todo-serverless-firebase-sa.json';
 
 firebaseAdmin.initializeApp({ credential: firebaseAdmin.credential.cert(serviceAccount as unknown as string) });

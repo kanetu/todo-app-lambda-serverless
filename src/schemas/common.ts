@@ -1,4 +1,4 @@
-import  * as Joi from "joi";
+import * as Joi from "joi";
 
 const common = {
   name: Joi.string().min(3).max(50),

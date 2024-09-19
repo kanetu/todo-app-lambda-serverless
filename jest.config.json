@@ -3,7 +3,7 @@
   "testMatch": ["<rootDir>/**/*.test.(js|jsx|ts|tsx)"],
   "moduleFileExtensions": ["ts", "js"],
   "transform": {
-    "^.+.tsx?$": ["ts-jest",{}]
+    "^.+.ts?$": ["ts-jest",{ "useESM": true}]
   },
   "transformIgnorePatterns": ["<rootDir>/node_modules/"],
   "clearMocks": true,

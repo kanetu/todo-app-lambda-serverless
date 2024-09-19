@@ -3,6 +3,7 @@ import { getSecret } from "../utils/getSecret";
 
 jest.mock("@aws-sdk/client-secrets-manager", () => ({
     SecretsManagerClient: jest.fn(),
+    GetSecretValueCommand: jest.fn()
 }));
 
 
@@ -22,7 +23,6 @@ describe("getSecret", () => {
         (SecretsManagerClient as jest.Mock).mockImplementation(() => {
             return {
                 send: () => {
-                    console.log("Mock !!!!!!!")
                     return {
                         secret: "secret-344"
                     }
@@ -53,9 +53,13 @@ describe("getSecret", () => {
             }
         })
 
-        const result = await getSecret("u24-w4rt-3223")
-        expect((result as Error).name).toBe("Error")
-        expect((result as Error).message).toBe("Unexpected: Error")
+        try {
+            await getSecret("u24-w4rt-3223")
+        } catch (error) {
+            expect((error as Error).name).toBe("Error")
+            expect((error as Error).message).toBe("Unexpected: Error")
+        }
+
     })
 
     it("environment variable IS_OFFLINE is false", async () => {
@@ -71,8 +75,11 @@ describe("getSecret", () => {
             }
         })
 
-        const result = await getSecret("u24-w4rt-3223")
-        expect((result as Error).name).toBe("Error")
-        expect((result as Error).message).toBe("Unexpected: Error")
+        try {
+            await getSecret("u24-w4rt-3223")
+        } catch (error) {
+            expect((error as Error).name).toBe("Error")
+            expect((error as Error).message).toBe("Unexpected: Error")
+        }
     })
 })

@@ -3,7 +3,7 @@ import { getSecret } from "./getSecret";
 
 const createDbInstance = async (dbSecretName: string) => {
   const secret = await getSecret(dbSecretName);
-  if (!secret.SecretString) {
+  if (!secret || !secret.SecretString) {
     throw Error("There is no secret string");
   }
 
@@ -17,8 +17,5 @@ const createDbInstance = async (dbSecretName: string) => {
   });
 };
 const connectDatabase = (client: Client) => client.connect();
-const queryDatabase = (client: Client, query: string) => client.query(query);
-const commandDatabase = (client: Client, command: string) =>
-  client.query(command);
 
-export { createDbInstance, connectDatabase, queryDatabase, commandDatabase };
+export { createDbInstance, connectDatabase };

@@ -30,7 +30,6 @@ export const createTodo: Handler = async (
   try {
 
     const validateResult = createTodoSchema.validate(JSON.parse(_event.body))
-    console.log("akne->", validateResult)
     if(validateResult.error){
       return {
         statusCode: 400,

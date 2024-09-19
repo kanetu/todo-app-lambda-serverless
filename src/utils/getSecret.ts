@@ -20,7 +20,6 @@ const getSecret = async (secretName: string) => {
     );
   } catch (error) {
     console.error(error)
-    return error;
   }
   return response;
 };

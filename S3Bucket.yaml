@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: 2010-09-09
+Metadata:
+  'AWS::CloudFormation::Designer':
+    954d49c3-5c25-4b62-9f24-2cd81355a488:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: -173
+        'y': -334
+      z: 0
+      embeds: []
+Resources:
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Ref BucketName
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 954d49c3-5c25-4b62-9f24-2cd81355a488
+Parameters:
+  BucketName:
+    Description: Name of the S3 bucket
+    Type: String
+    MinLength: 3
+    MaxLength: 63
+    AllowedPattern: '^[a-z0-9.-]+$'
+    ConstraintDescription: >-
+      S3 bucket names must be lowercase and can only contain letters, numbers,
+      dots, and hyphens.
