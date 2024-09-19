@@ -17,12 +17,6 @@ plugins:
   - serverless-offline # used for local execution
 
 functions:
-  pushNotification:
-      handler: ./src/todo/pushNotification.pushNotification
-      events:
-        - httpApi:
-            path: /pushNotification/{token}
-            method: get
   authorizer:
       handler: ./src/auth/authorizer.authorizer
       environment:
