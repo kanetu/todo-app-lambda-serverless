@@ -46,7 +46,7 @@ export const deleteTodo: Handler = async (
     };
   } finally {
     await db.end();
-    console.info("end::deleteTodo");
+    console.info("end::deleteTodo-");
   }
 
   return {
