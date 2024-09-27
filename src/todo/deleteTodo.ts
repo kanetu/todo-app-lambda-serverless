@@ -22,6 +22,7 @@ export const deleteTodo: Handler = async (
       }),
     };
   }
+  
 
   console.info("start::deleteTodo");
 
